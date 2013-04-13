@@ -1,10 +1,12 @@
-/* You'll need to
- * npm install sequelize
- * before running this example. Documentation is at http://sequelizejs.com/
- */
+
+
+
+
+
+
 
 var Sequelize = require("sequelize");
-var sequelize = new Sequelize("chat", "bacon", "pass");
+var sequelize = new Sequelize("chat", "root");
 /* TODO this constructor takes the database name, username, then password.
  * Modify the arguments if you need to */
 

@@ -38,28 +38,22 @@ var handleRequest = function(request, response) {
       response.writeHead(statusCode, headers);
       var chunk = querystring.parse(data);
       addData(chunk);
-      response.end('\n');
-    } else if (request.method === 'GET') {
+      return response.end('\n');
+    } 
+    if (request.method === 'GET') {
       response.writeHead(statusCode, headers);
-      response.end(JSON.stringify(getData()) || []);
+      return dbConnection.query("SELECT * FROM Messages", function(err, results) {
+        if (err) { return console.log(err); }
+        response.end(JSON.stringify(results));
+      });
     }
   });
-  response.writeHead(statusCode, headers);
-  response.end(JSON.stringify(getData()));
 };
 
 var addData = function(chunk) {
   var querystr = 'insert into Messages (username, message, roomname) values("' + chunk.username + '", "' + chunk.message + '", "' + chunk.roomname + '");';
   dbConnection.query(querystr, function(err, results) {
     if (err) { return console.log(err); }
-  });
-};
-
-var getData = function() {
-  dbConnection.query("SELECT * FROM Messages", function(err, results) {
-    if (err) { return console.log(err); }
-    console.log('GET', results);
-    return results;
   });
 };
 
