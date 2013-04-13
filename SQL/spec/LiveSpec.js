@@ -9,18 +9,13 @@ describe("Persistent Node Chat Server", function() {
 
   beforeEach(function() {
     dbConnection = mysql.createConnection({
-    /* TODO: Fill this out with your mysql username */
-      user: "",
-    /* and password. */
+      user: "root",
       password: "",
       database: "chat"
     });
     dbConnection.connect();
 
-    var tablename = ""; // TODO: fill this out
-
-    /* Empty the db table before each test so that multiple tests
-     * (or repeated runs of the tests) won't screw each other up: */
+    var tablename = "Messages";
     dbConnection.query("DELETE FROM " + tablename);
   });
 
@@ -39,13 +34,13 @@ describe("Persistent Node Chat Server", function() {
               /* Now if we look in the database, we should find the
                * posted message there. */
 
-              var queryString = "";
+              var queryString = "SELECT * from Messages";
               var queryArgs = [];
               /* TODO: Change the above queryString & queryArgs to match your schema design
                * The exact query string and query args to use
                * here depend on the schema you design, so I'll leave
                * them up to you. */
-              dbConnection.query( queryString, queryArgs,
+              dbConnection.query( queryString,
                 function(err, results, fields) {
                   // Should have one result:
                   expect(results.length).toEqual(1);
@@ -54,21 +49,16 @@ describe("Persistent Node Chat Server", function() {
                   /* TODO: You will need to change these tests if the
                    * column names in your schema are different from
                    * mine! */
-
                   done();
                 });
             });
   });
 
   it("Should output all messages from the DB", function(done) {
-    // Let's insert a message into the db
-    var queryString = "";
-    var queryArgs = ["Javert", "Men like you can never change!"];
-    /* TODO - The exact query string and query args to use
-     * here depend on the schema you design, so I'll leave
-     * them up to you. */
+    var queryString = "SELECT * from Messages";
+    var queryArgs = [];
 
-    dbConnection.query( queryString, queryArgs,
+    dbConnection.query( queryString,
       function(err, results, fields) {
         /* Now query the Node chat server and see if it returns
          * the message we just inserted: */
