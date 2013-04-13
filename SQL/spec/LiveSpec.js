@@ -55,13 +55,12 @@ describe("Persistent Node Chat Server", function() {
   });
 
   it("Should output all messages from the DB", function(done) {
-    var queryString = "SELECT * from Messages";
+    var queryString = "INSERT into Messages (username, message) values ('Javert', 'Men like you can never change!');";
     var queryArgs = [];
 
     dbConnection.query( queryString,
       function(err, results, fields) {
-        /* Now query the Node chat server and see if it returns
-         * the message we just inserted: */
+
         request("http://127.0.0.1:8080/classes/room1",
           function(error, response, body) {
             var messageLog = JSON.parse(body);

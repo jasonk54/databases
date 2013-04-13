@@ -52,7 +52,6 @@ var addData = function(chunk) {
   var querystr = 'insert into Messages (username, message, roomname) values("' + chunk.username + '", "' + chunk.message + '", "' + chunk.roomname + '");';
   dbConnection.query(querystr, function(err, results) {
     if (err) { return console.log(err); }
-    // console.log('POST', results);
   });
 };
 
@@ -67,7 +66,6 @@ var getData = function() {
 var port = 8080;
 var ip = "127.0.0.1";
 var server = http.createServer(handleRequest);
-
 
 console.log("Listening on http://" + ip + ":" + port);
 server.listen(port, ip);
